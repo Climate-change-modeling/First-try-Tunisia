@@ -21,7 +21,7 @@ countries: ["TN"]
 enable:
   retrieve_databundle: true #  Recommended 'true', for the first run. Otherwise data might be missing.
   retrieve_databundle_sector: true
-  retrieve_cost_data: true # true: retrieves cost data from technology data and saves in resources/costs.csv, false: uses cost data in data/costs.csv
+  retrieve_cost_data: false # true: retrieves cost data from technology data and saves in resources/costs.csv, false: uses cost data in data/costs.csv
   retrieve_cutout: true
   download_osm_data: true # If 'true', OpenStreetMap data will be downloaded for the above given countries
   download_global_buildings: false # If 'true', GlobalMLBuildingFootprints data will be downloaded for the above given countries
@@ -186,21 +186,21 @@ load_options:
 co2_budget:
   enable: false
   override_co2opt: true
-  co2base_value: co2limit # choose from: [co2limit, co2base, absolute, {float}]
+  co2base_value: co2limit # choose from: [co2limit, co2base, absolute, {float}]. Anche qui, cercare fonti di agenzie autorevoli che indichino vincoli più morbidi per paesi non pienamente sviluppati
   year:
     2020: 1.0
-    2025: 0.9
-    2030: 0.8
-    2035: 0.65
-    2040: 0.40
-    2045: 0.15
-    2050: 0
+    2025: 0.95
+    2030: 0.85
+    2035: 0.70
+    2040: 0.50
+    2045: 0.30
+    2050: 0.20
 
 electricity:
   base_voltage: 380.
   voltages: [132., 220., 300., 380., 500., 750.]
-  co2limit: 7.75e+7 # ATTENZIONEEEEEEEEEEEEE European default, 0.05 * 3.1e9*0.5, needs to be adjusted for Africa 
-  co2base: 1.487e+9 # ATTENZIONEEEEEEEEEEEEE European default, adjustment to Africa necessary
+  co2limit: 1.5e+10 # ATTENZIONEEEEEEEEEEEEE European default, 0.05 * 3.1e9*0.5, needs to be adjusted for Africa 
+  co2base: 3.0e+10 # ATTENZIONEEEEEEEEEEEEE European default, adjustment to Africa necessary
   agg_p_nom_limits: # enables to set country-wise maximum and minimum generation capacities for generators (e.g. renewables, nuclear, and geothermal)
     file: data/agg_p_nom_minmax.csv # path to csv file containing country-wise generation capacity limits
     include_existing: true # false: only new built capacities are constrained; true: existing capacities are accounted in the constraints
@@ -215,7 +215,7 @@ electricity:
     contingency: 0 # fixed capacity in MW
 
   max_hours:
-    battery: 6  #LOOK FOR REPORTS THAT INCLUDE "STATE OF ART"
+    battery: 12  #LOOK FOR REPORTS THAT INCLUDE "STATE OF ART"
     H2: 168     #LOO FOR REPORTS THAT INCLUDE "STATE OF ART" 
 
   extendable_carriers:
@@ -816,7 +816,7 @@ sector:
 solving:
   options:
     formulation: kirchhoff
-    load_shedding: 1000 # Set to "false" or willingness to pay in €/kWh, e.g. 100 €/kWh (intersect between macroeconomic and surveybased willingness to pay https://doi.org/10.3389/fenrg.2015.00055)
+    load_shedding: 25000 # Set to "false" or willingness to pay in €/kWh, e.g. 100 €/kWh (intersect between macroeconomic and surveybased willingness to pay https://doi.org/10.3389/fenrg.2015.00055)
     noisy_costs: true
     min_iterations: 4
     max_iterations: 6
