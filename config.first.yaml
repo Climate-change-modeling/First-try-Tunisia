@@ -18,8 +18,8 @@ enable:
 
 scenario:
   clusters: [5] #small country, few nodes
-  opts: [Co2L0.5-4H] # CO₂ limit at 60% base value, 4h time resolution 
-  year_prediction: 2050
+  opts: [Co2L0.6-4H] # CO₂ limit at 60% base value, 4h time resolution 
+  year_prediction: 2040
   
 snapshots: # weather profile used, must meet cutout
   start: "2013-01-01"
@@ -29,7 +29,7 @@ snapshots: # weather profile used, must meet cutout
 load_options: 
   ssp: "ssp2-2.6" # socioeconomic pathway 2.6 W/m² radiative, middle of the road-for demand scaling and energy traansition
   weather_year: 2013   # wind and solar profiles, must meet cutout
-  year_prediction: 2050   # target year for demand: ./data/ssp2-2.6/2050/era5_2013/Africa.csv
+  year_prediction: 2040   # target year for demand: ./data/ssp2-2.6/2040/era5_2013/Africa.csv
   
 
 clean_osm_data_options:
@@ -40,15 +40,15 @@ base_network: # coeherent with osm filter above, for both substation and voltage
   min_voltage_rebase_voltage: 35000
 
 costs:
-  year: 2050           # load resources/costs_2050_elec.csv             
+  year: 2040           # load resources/costs_2040_elec.csv             
   technology_data_version: "v0.13.2" # coherent with config.default.yaml
 
 electricity:
   co2base: 3.218e+7
   automatic_emission: true
   extendable_carriers:
-    Generator: [solar, onwind, hydro, OCGT]
-    StorageUnit: [battery, H2]
+    Generator: [solar, onwind]
+    StorageUnit: [battery]
     Link: []
     Line: []
   estimate_renewable_capacities:
@@ -56,9 +56,7 @@ electricity:
     year: 2020   # 2020 IRENA data is more complete for TN than 2013
     p_nom_min: 0.5
     p_nom_max: false # compute upper limit ?? > usually false 
-  max_hours:
-    battery: 6
-    H2: 168 # 1 week, to allow seasonal storage
+  
 
 atlite:
   default: cutout-2013-era5
